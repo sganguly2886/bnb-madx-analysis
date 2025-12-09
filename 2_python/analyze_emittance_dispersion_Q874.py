@@ -80,3 +80,4 @@ plt.grid(True)
 plt.tight_layout()
 plt.savefig(os.path.join(FIG, "emittance_vs_Q874_current.png"), dpi=150)
 plt.close()
+
