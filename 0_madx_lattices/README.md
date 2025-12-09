@@ -1,80 +1,106 @@
 # MAD-X Lattice Files
 
-This folder contains all MAD-X input files used for the BNB narrow beam optics studies.
+This folder contains the complete set of MAD-X input lattice files used for the
+BNB narrow beam optics studies. These files define the accelerator optics model
+used throughout the full analysis chain.
 
 These lattice files define:
-- The full BNB beamline geometry
-- Quadrupole strengths and scan configurations
-- Momentum and optics variations
-- Fixed and scanned K1 configurations for HQ873, HQ874, and HQ875
+
+- The full BNB beamline geometry  
+- Quadrupole strengths and scan configurations  
+- Momentum and optics variations  
+- Fixed and scanned K1 configurations for HQ873, HQ874, and HQ875  
+
+All beam size predictions, emittance extraction, and target spot size optimization
+ultimately depend on these optics definitions.
 
 ---
 
 ## File Naming Convention
 
 ### Baseline Lattices
-These represent the nominal operating configurations:
 
-- `bnbnew_default.madx`
-- `bnbnew_fixed.madx`
-- `bnbnew_HQ873_default.madx`
-- `bnbnew_HQ874_default.madx`
-- `bnbnew_HQ875_default.madx`
+These represent the nominal operating configurations used in all studies:
+
+- bnbnew.madx  
+  Master baseline lattice used as the template for all scans.
+
+- bnbnew_fixed.madx  
+  Fixed reference optics used for comparison and validation.
+
+- bnbnew_HQ873_default.madx  
+  Default HQ873 horizontal focusing configuration.
+
+- bnbnew_HQ873_874_default.madx  
+  Default coupled HQ873–HQ874 optics configuration.
+
+- bnbnew_HQ875K1_default.madx  
+  Default HQ875 vertical focusing configuration using fixed K1.
 
 ---
 
-### Quadrupole Scan Files
+## Quadrupole Scan Files
 
-These files apply systematic current or K1 variations:
+These files apply systematic current or K1 variations to study optics sensitivity.
 
-#### HQ873 Scans
+---
+
+### HQ873 Scans (Horizontal Focusing)
+
 Files starting with:
-bnbnew_HQ873_*
-bnbnew_HQ873K1_*
+
+- bnbnew_HQ873_*  
+- bnbnew_HQ873K1_*  
 
 These are used to study how Q873 affects:
-- βx at MW873, MW875, MW876
-- Dispersion Dx
-- Beam spot size at the target
+
+- Horizontal beta function (beta_x) at MW873, MW875, and MW876  
+- Horizontal dispersion (D_x)  
+- Horizontal beam spot size at the target  
 
 ---
 
-#### HQ874 Scans
-Files starting with:
-bnbnew_HQ874_*
-bnbnew_IQ874_*
-bnbnew_HQ873_874_*
+### HQ874 Scans (Dispersion-Dominated Studies)
+
+Files included in this repository:
+
+- bnbnew_IQ874_default.madx  
+- bnbnew_IQ874_10percentup.madx  
+- bnbnew_IQ874_10percentdown.madx  
+- bnbnew_IQ874_20percentup.madx  
+- bnbnew_IQ874_20percentdown.madx  
 
 These explore:
-- Local vs global optics minima
-- Coupled behavior between Q873 and Q874
-- Sensitivity of dispersion to HQ874 current
+
+- Sensitivity of horizontal dispersion to HQ874 current  
+- Local vs global optics minima  
+- Dispersion-driven beam size growth  
+- Coupled behavior with HQ873 through emittance extraction  
 
 ---
 
-#### HQ875 Scans
-Files starting with:
-bnbnew_HQ875_*
-bnbnew_IQ875_*
+### HQ875 Vertical Focusing
+
+Only fixed K1-based HQ875 optics are used in this analysis:
+
+- bnbnew_HQ875K1_default.madx  
 
 These probe:
-- Vertical focusing behavior
-- Stability of σy at the target
-- Fixed-BETX optimization studies
+
+- Vertical focusing behavior  
+- Stability of sigma_y at the target  
+- Fixed-BETX optimization behavior  
 
 ---
 
-## Percentage Variation Files
+## Note on Percentage Variation Files
 
-Files with names like:
-bnbnew_10percentup_*
-bnbnew_20percentdown_*
-bnbnew_30percentup_*
+Large global percentage-scaling lattice sets (for example 10%, 20%, 30% global scaling)
+are not included in this repository. These were part of early robustness studies
+and are not required to reproduce the final published plots.
 
-represent systematic strength scaling studies to explore:
-- Optics robustness
-- Sensitivity to power supply drift
-- Global lattice stability
+Only the minimal, script-compatible lattice set needed for full reproducibility
+is stored here.
 
 ---
 
@@ -82,23 +108,25 @@ represent systematic strength scaling studies to explore:
 
 These lattice files are executed using:
 
-```bash
 madx < filename.madx
-They generate Twiss output files (.tfs, .out) that are then analyzed using the Python scripts in:
+
+They generate Twiss output files (.tfs, .out) that are then analyzed using the
+Python scripts in:
+
 2_python/
-Important Notes
 
-These lattice files are not raw data; they represent the physics model used throughout the analysis.
+---
 
-All beam size predictions at the target ultimately depend on these optics definitions.
+## Important Notes
 
-Any change in these files directly affects:
+- These lattice files are not raw data; they represent the physics model used
+  throughout the analysis.
+- All beam size predictions at the target ultimately depend on these optics
+  definitions.
+- Any change in these files directly affects:
 
-β-functions
-
-Dispersion
-
-Emittance extraction
-
-Target spot size predictions
+  - Beta functions  
+  - Dispersion  
+  - Emittance extraction  
+  - Target spot size predictions  
 
