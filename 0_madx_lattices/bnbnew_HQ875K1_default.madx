@@ -1,0 +1,593 @@
+TITLE,'BNB.MADX';
+brho := (8.83490/2.998)*100;  ! For 8.83490 GeV/c proton beam
+
+! Define the beam spot size (2.5 mm converted to meters)
+SIGMA_X = 2.5E-3; !Spot size in meters
+
+
+! Example current values for magnets (need to be verified)
+I_HQ851 = 100.0;
+I_HQ860 = 2.02 A;
+I_HQ861 = 16.72 A;
+I_HQ862 = 17.22 A;
+I_HQ864 = 18.75 A;
+I_HQ865 = 17.89 A;
+I_Q867A = 0 A;
+I_Q867B = 0 A;
+I_Q866 = 10.91 A;
+I_Q868A = 0 A;
+I_Q868B = 0 A;
+I_HQ869A = 0 A;
+I_HQ869B = 0 A;
+I_Q870A = 0 A;
+I_Q870B = 0 A;
+I_HQ871A = 0 A;
+I_HQ871B = 0 A;
+I_HQ872 = 103.18 A;
+I_HQ873 = 111.19 A;
+I_HQ874 = 171.17 A;
+I_HQ875 = 130.50 A;
+I_HT860 = 2.00 A (horizontal kicker);
+I_HT862 = 2.00 A (horizontal kicker);
+I_HT865 = 2.00 A (horizontal kicker);
+I_HT866 = 2.00 A (horizontal kicker);
+I_HT868 = 2.00 A (horizontal kicker);
+I_HT870 = 2.00 A (horizontal kicker);
+I_HT873 = 40.00 A (horizontal kicker);
+I_VT860 = 2.00 A (vertical kicker);
+I_VT862 = 2.00 A (vertical kicker);
+I_VT865 = 2.00 A (vertical kicker);
+I_VT867 = 2.00 A (vertical kicker);
+I_VT869 = 2.00 A (vertical kicker);
+I_VT871 = 2.00 A (vertical kicker);
+I_VT873 = 2.00 A (vertical kicker);
+
+
+! Quadrupole strengths
+HQ851K1 :=  -0.21570;
+HQ860K1 := 0.01372;
+HQ861K1 := 0.11374;
+HQ862K1 := -0.11714;
+HQ864K1 := 0.12755;
+HQ865K1 :=  -0.12171;
+HQ866K1 :=0.07422;
+HQ867AK1 := -0.09166;
+HQ867BK1 := -0.09166;
+HQ868AK1 := 0.09166;
+HQ868BK1 := 0.09166;
+HQ869AK1 := -0.09166;
+HQ869BK1 :=  -0.09166;
+HQ870AK1 := 0.09166;
+HQ870BK1 := 0.09166;
+HQ871AK1 := -0.09166;
+HQ871BK1 := -0.09166;
+HQ872K1 := 0.06880;
+HQ873K1 :=  -0.14353;
+HQ874K1 := 0.22096;
+HQ875K1 := -0.08702;
+
+
+! Beamline definition
+S1_BML: marker;
+HQ851: quadrupole, L=0.22860, K1=HQ851K1;
+SQA_END: drift, L=0.08414;
+DEX1: drift, L=1.28936;
+LM8511: monitor, L=0.00000;
+MID_END: drift, L=0.30480;
+B8511P: rbend, L=4.06400, angle=0.04000, tilt=0.00000;
+MID_END2: drift, L=0.30480;
+DYFU: drift, L=1.30400;
+GV: drift, L=0.07620;
+DYFD: drift, L=0.31980;
+DR000: drift, L=0.47623;
+TOR860: drift, L=0.30480;
+DR001: drift, L=0.10160;
+MCV_END: drift, L=0.05250;
+VT860: kicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+MCV_END2: drift, L=0.05250;
+DR002: drift, L=0.89627;
+IP300: drift, L=0.19685;
+! Misalignment before TAPER
+!ALIGN, DX=-0.040000, DY=0.000000;  ! Apply misalignment before TAPER
+TAPER_DRIFT_1: drift, L=0.14288;  ! TAPER section
+! Revert misalignment after TAPER
+!ALIGN, DX=0.040000, DY=0.000000;   ! Revert misalignment after TAPER
+BEL040_1: drift, L=0.10160;
+BS860U: drift, L=0.03810;
+BS860: drift, L=2.25425;
+BS860D: drift, L=0.12700;
+DR003: drift, L=0.49327;
+BPM_END_1: drift, L=0.02540;
+HP860_1: hmonitor, L=0.07620;
+HP860_2: hmonitor, L=0.07620;
+BPM_END_860_1: drift, L=0.02540;
+BPM_END_860_2: drift, L=0.02540;
+VP860_1: vmonitor, L=0.07620;
+VP860_2: vmonitor, L=0.07620;
+BPM_END_2: drift, L=0.02540;
+DR004: drift, L=1.07764;
+QE0_1: drift, L=0.15240;
+HQ860_1: quadrupole, L=0.76200, K1=HQ860K1;
+HQ860_2: quadrupole, L=0.76200, K1=HQ860K1; ! Add this repeated HQ860
+QE0_2: drift, L=0.15240;
+DR006: drift, L=0.12700;
+MCH_END_860_1: drift, L=0.07500;
+HT860: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END_860_2: drift, L=0.07500;
+IP300: drift, L=0.19685;
+BEL040_2: drift, L=0.10160;
+DEX2B: drift, L=0.52459;
+HBB1: drift, L=0.11430;
+LM8601: monitor, L=0.00000;
+D63_END: drift, L=0.19050;
+SROT1: marker;  ! Just a placeholder for spin rotation if required
+B8601: rbend, L=3.04800, angle=0.08001, tilt=0.00000;
+SROT2: marker;  ! Second spin rotation placeholder
+D63_END: drift, L=0.19050;
+DBB1: drift, L=0.22860;
+D63_END: drift, L=0.19050;
+SROT3: marker;  ! Second spin rotation placeholder
+B8602: rbend, L=3.04800, angle=0.08001, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DINA: drift, L=0.12933;
+BPM_END_n: drift, L=0.02540;
+HP861: hmonitor, L=0.07620;
+HP861: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BPM_END: drift, L=0.02540;
+VP861: vmonitor, L=0.07620;
+VP861: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D861X: drift, L=0.07772;
+MW861: monitor, L=0.20320;
+MW861: monitor, L=0.20320;
+BEL861D: drift, L=0.12065;
+QE0_3: drift, L=0.15240;
+HQ861: quadrupole, L=0.76200, K1=HQ861K1;
+HQ861: quadrupole, L=0.76200, K1=HQ861K1;
+QE0_4: drift, L=0.15240;
+DQ23: drift, L=0.22860;
+QE0_5: drift, L=0.15240;
+HQ862: quadrupole, L=0.76200, K1=HQ862K1;
+HQ862: quadrupole, L=0.76200, K1=HQ862K1;
+QE0_6: drift, L=0.15240;
+LM862: monitor, L=0.00000;
+DR862A: drift, L=0.03358;
+HT862: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+DR862B: drift, L=0.06772;
+VT862: vkicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+DR862C: drift, L=0.03203;
+IP600: drift, L=0.19685;
+DR862D: drift, L=0.15252;
+DINB: drift, L=0.20470;
+DUMMY: drift, L=0.50800;
+DQQ: drift, L=0.17780;
+DUMMY: drift, L=0.50800;
+DPIPE1: drift, L=18.96370;
+DPIPE2: drift, L=18.96370;
+DUMMY: drift, L=0.50800;
+DQQ: drift, L=0.17780;
+DUMMY: drift, L=0.50800;
+DO1A: drift, L=0.33307;
+PG864: drift, L=0.00000;
+IP600: drift, L=0.19685;
+GV: drift, L=0.07620;
+LM864: monitor, L=0.00000;
+BPM_END: drift, L=0.02540;
+HP864_1: hmonitor, L=0.07620;
+HP864_2: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BPM_END: drift, L=0.02540;
+VP864: vmonitor, L=0.07620;
+VP864: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D864X: drift, L=0.14407;
+MW864: monitor, L=0.20320;
+MW864: monitor, L=0.20320;
+BEL864D: drift, L=0.13701;
+QE0_7: drift, L=0.15240;
+HQ864_1: quadrupole, L=0.76200, K1=HQ864K1;
+HQ864_2: quadrupole, L=0.76200, K1=HQ864K1;
+QE0_8: drift, L=0.15240;
+RVE: drift, L=0.00318;
+RV: drift, L=0.29845;
+RVE: drift, L=0.00318;
+QE0_9: drift, L=0.15240;
+HQ865_1: quadrupole, L=0.76200, K1=HQ865K1;
+HQ865_2: quadrupole, L=0.76200, K1=HQ865K1;
+QE0_10: drift, L=0.15240;
+LM865: monitor, L=0.00000;
+MCH_END: drift, L=0.07500;
+HT865: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END: drift, L=0.07500;
+MCV_END: drift, L=0.05250;
+VT865: vkicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+MCV_END: drift, L=0.05250;
+BEL040_3: drift, L=0.10160;
+DO1B: drift, L=0.05207;
+HBB2: drift, L=0.11430;
+D63_END: drift, L=0.19050;
+SROT4: marker;  ! Second spin rotation placeholder
+B8651: rbend, L=3.04800, angle=0.08001, tilt=0.00000;
+SROT5: marker;  ! Second spin rotation placeholder
+D63_END: drift, L=0.19050;
+DBB2: drift, L=0.22860;
+D63_END: drift, L=0.19050;
+SROT6: marker;  ! Second spin rotation placeholder
+B8652: rbend, L=3.04800, angle=0.08001, tilt=0.00000;
+SROT7: marker;  ! Second spin rotation placeholder
+D63_END: drift, L=0.19050;
+DBB2: drift, L=0.22860;
+D63_END: drift, L=0.19050;
+SROT8: marker;  ! Second spin rotation placeholder
+B8653: rbend, L=3.04800, angle=0.08001, tilt=0.00000;
+SROT9: marker;
+D63_END: drift, L=0.19050;
+HBB2: drift, L=0.11430;
+MK_LVL: marker;
+BSWIC: marker;
+DO2A: drift, L=0.65941;
+HTSLOT: drift, L=0.30480;
+IP300: drift, L=0.19685;
+BEL040_4: drift, L=0.10160;
+HBB2: drift, L=0.11430;
+D63_END: drift, L=0.19050;
+B8661: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+LM8661: monitor, L=0.00000;
+DBB2: drift, L=0.22860;
+D63_END: drift, L=0.19050;
+B8662: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+HSLOT866: drift, L=0.93881;
+BPM_END: drift, L=0.02540;
+HP866: hmonitor, L=0.07620;
+HP866: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BEL040_5: drift, L=0.10160;
+DO2X: drift, L=0.00639;
+QE0_11: drift, L=0.15240;
+HQ866_1: quadrupole, L=0.76200, K1=HQ866K1;
+HQ866_2: quadrupole, L=0.76200, K1=HQ866K1;
+QE0_12: drift, L=0.15240;
+LM866: monitor, L=0.00000;
+MCH_END: drift, L=0.07500;
+MCH866: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END: drift, L=0.07500;
+IPINS_1: drift, L=0.19685;
+BEL040_6: drift, L=0.10160;
+HBB2: drift, L=0.11430;
+D63_END: drift, L=0.19050;
+B8663: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DR867U: drift, L=0.23726;
+BPM_END: drift, L=0.02540;
+VP867: vmonitor, L=0.07620;
+VP867: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D867X: drift, L=0.00714;
+BEL040_7: drift, L=0.10160;
+PMQ_END: drift, L=0.06350;
+Q867A: quadrupole, L=0.50800, K1=HQ867AK1;
+PMQ_END: drift, L=0.06350;
+DQQ867: drift, L=0.05080;
+DQQ867: drift, L=0.05080;
+PMQ_END: drift, L=0.06350;
+Q867B: quadrupole, L=0.50800, K1=HQ867BK1;
+PMQ_END: drift, L=0.06350;
+LM867: monitor, L=0.00000;
+D2IN: drift, L=0.05080;
+MCV_END: drift, L=0.05250;
+MCV867: vkicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+MCV_END: drift, L=0.05250;
+IP300: drift, L=0.19685;
+BEL040_8: drift, L=0.10160;
+DR867D: drift, L=0.11875;
+D63_END: drift, L=0.19050;
+B8671: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DBB3_1: drift, L=0.22860;
+D63_END: drift, L=0.19050;
+B8672: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DBB3_2: drift, L=0.22923;
+D63_END: drift, L=0.19050;
+B8673: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DR868U: drift, L=0.17442;
+BPM_END: drift, L=0.02540;
+HP868: hmonitor, L=0.07620;
+HP868: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D868X: drift, L=0.12133;
+BEL040_9: drift, L=0.10160;
+PMQ_END_t: drift, L=0.06350;
+Q868A: quadrupole, L=0.50800, K1=HQ868AK1;
+PMQ_END_t1: drift, L=0.06350;
+DQQ868: drift, L=0.06350;
+DQQ868: drift, L=0.06350;
+PMQ_END_t2: drift, L=0.06350;
+Q868B: quadrupole, L=0.50800, K1=HQ868BK1;
+PMQ_END_t3: drift, L=0.06350;
+LM868: monitor, L=0.00000;
+D2IN: drift, L=0.05080;
+MCH_END_t1: drift, L=0.07500;
+MCH868: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END_t2: drift, L=0.07500;
+DR868D: drift, L=0.12065;
+BEL040_10: drift, L=0.10160;
+DR868D2: drift, L=0.07552;
+D63_END_t1: drift, L=0.19050;
+B8681: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END_t2: drift, L=0.19050;
+DBB3_3: drift, L=0.22977;
+D63_END_t3: drift, L=0.19050;
+B8682: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END_t4: drift, L=0.19050;
+DBB3_4: drift, L=0.22984;
+D63_END_t5: drift, L=0.19050;
+B8683: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END_t6: drift, L=0.19050;
+DR869U_1: drift, L=0.17842;
+BPM_END_x1: drift, L=0.02540;
+VP869: vmonitor, L=0.07620;
+VP869: vmonitor, L=0.07620;
+BPM_END_x2: drift, L=0.02540;
+D869X: drift, L=0.05611;
+BEL040_11: drift, L=0.10160;
+PMQ_END_t4: drift, L=0.06350;
+Q869A: quadrupole, L=0.50800, K1=HQ869AK1;
+PMQ_END_t5: drift, L=0.06350;
+DQQ869_1: drift, L=0.05080;
+DQQ869_2: drift, L=0.04287;
+PMQ_END_t6: drift, L=0.06350;
+Q869B: quadrupole, L=0.50800, K1=HQ869BK1;
+PMQ_END_t7: drift, L=0.06350;
+LM869: monitor, L=0.00000;
+D2IN: drift, L=0.05080;
+MCV_END: drift, L=0.05250;
+MCV869: vkicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+MCV_END: drift, L=0.05250;
+IP300: drift, L=0.19685;
+BEL040_12: drift, L=0.10160;
+DR869D: drift, L=0.13890;
+D63_END: drift, L=0.19050;
+B8691: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DBB3_5: drift, L=0.23002;
+D63_END: drift, L=0.19050;
+B8692: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DBB3_6: drift, L=0.23026;
+D63_END: drift, L=0.19050;
+B8693: rbend, L=3.04800, angle=0.08040, tilt=0.00000;
+D63_END: drift, L=0.19050;
+DR870U: drift, L=0.02202;
+D6IN: drift, L=0.15240;
+BPM_END: drift, L=0.02540;
+HP870: hmonitor, L=0.07620;
+HP870: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BPM_END: drift, L=0.02540;
+VP870: vmonitor, L=0.07620;
+VP870: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D870X: drift, L=0.02621;
+TAPER_DRIFT_2: drift, L=0.22757; //Adding TAPER in the location of its first appearance
+PMQ_END: drift, L=0.06350;
+Q870A: quadrupole, L=0.50800, K1=HQ870AK1;
+PMQ_END: drift, L=0.06350;
+DQQ2_1: drift, L=0.08890;
+DQQ2_2: drift, L=0.08890;
+PMQ_END: drift, L=0.06350;
+Q870B: quadrupole, L=0.50800, K1=HQ870BK1;
+PMQ_END: drift, L=0.06350;
+LM870: monitor, L=0.00000;
+D2IN_870: drift, L=0.05080;
+MCH_END_870: drift, L=0.07500;
+HT870: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END_n: drift, L=0.07500;
+BEL040_13: drift, L=0.10160;
+DR870D: drift, L=0.39492;
+MW870: monitor, L=0.00000;
+DRENDARC: drift, L=0.00000;
+DR870: drift, L=8.35014;
+DR871U: drift, L=0.12760;
+BPM_END_871_1: drift, L=0.02540;
+VP871_1: vmonitor, L=0.07620;
+VP871_2: vmonitor, L=0.07620;
+BPM_END_871_2: drift, L=0.02540;
+D871X: drift, L=0.14298;
+SPL871: monitor, L=1.86436;
+BEL871D: drift, L=0.25521;
+PMQ_END_871_1: drift, L=0.06350;
+Q871A: quadrupole, L=0.50800, K1=HQ871AK1;
+PMQ_END_871_2: drift, L=0.06350;
+DQQ2_871_1: drift, L=0.08890;
+DQQ2_871_2: drift, L=0.08780;
+PMQ_END_871_3: drift, L=0.06350;
+Q871B: quadrupole, L=0.50800, K1=HQ871BK1;
+PMQ_END: drift, L=0.06350;
+LM871: monitor, L=0.00000;
+PAD871A: drift, L=0.05225;
+MCV_END: drift, L=0.05250;
+MCV871: vkicker, L=0.40000, tilt=0.00000, vkick=0.00000;
+MCV_END: drift, L=0.05250;
+PAD871B: drift, L=0.59835;
+DR871D: drift, L=0.90822;
+IP300: drift, L=0.19685;
+BEL040_14: drift, L=0.10160;
+D63_END: drift, L=0.19050;
+SROT10: marker;
+B8711: rbend, L=3.04800, angle=0.07481, tilt=0.00000;
+SROT11: marker;
+D63_END: drift, L=0.19050;
+DR872U: drift, L=5.27219;
+LM872: monitor, L=0.00000;
+BPM_END: drift, L=0.02540;
+HP872: hmonitor, L=0.07620;
+HP872: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+D872X: drift, L=0.15355;
+MW872: monitor, L=0.20230;
+MW872: monitor, L=0.20230;
+BEL872U: drift, L=0.17527;
+MQEND_1: drift, L=0.20000;
+HQ872_1: quadrupole, L=0.75500, K1=HQ872K1;
+HQ872_2: quadrupole, L=0.75500, K1=HQ872K1;
+MQEND_2: drift, L=0.20000;
+D6IN: drift, L=0.15240;
+MCH_END: drift, L=0.07500;
+MCH872: hkicker, L=0.40000, tilt=0.00000, hkick=0.00000;
+MCH_END: drift, L=0.07500;
+IPINS_2: drift, L=0.19685;
+BEL040_15: drift, L=0.10160;
+DR872D: drift, L=5.95123;
+D63_END: drift, L=0.19050;
+SROT12: marker;
+B8721: rbend, L=3.04800, angle=0.07481, tilt=0.00000;
+SROT13: marker;
+D63_END: drift, L=0.19050;
+D1M: drift, L=1.00000;
+DRX1: drift, L=2.33973;
+PG873: drift, L=0.00000;
+IP300: drift, L=0.19685;
+BPM_END: drift, L=0.02540;
+HP873: hmonitor, L=0.07620;
+HP873: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BPM_END: drift, L=0.02540;
+VP873: vmonitor, L=0.07620;
+VP873: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+DRX1A: drift, L=0.22601;
+MW873: monitor, L=0.20230;
+MW873: monitor, L=0.20230;
+DRX1B: drift, L=0.06985;
+ST_END: drift, L=0.19680;
+HT873: hkicker, L=0.38100, tilt=0.00000, hkick=0.00000;
+HT873: hkicker, L=0.38100, tilt=0.00000, hkick=0.00000;
+ST_END: drift, L=0.19680;
+PAD_MCV: drift, L=0.32530;
+MCV_END; drift, L=0.05250;
+VT873: vkicker, L=0.20000, tilt=0.00000, vkick=0.00000;
+VT873: vkicker, L=0.20000, tilt=0.00000, vkick=0.00000;
+MCV_END; drift, L=0.05250;
+PAD_MCV: drift, L=0.32530;
+BEL040_16: drift, L=0.18227;
+LM873: monitor, L=0.00000;
+MQEND_873: drift, L=0.20000;
+HQ873_1: quadrupole, L=0.97500, K1=HQ873K1;
+HQ873_2: quadrupole, L=0.97500, K1=HQ873K1;
+MQEND_873: drift, L=0.20000;
+DRX2: drift, L=0.05142;
+D12IN_1: drift, L=0.30480;
+MQEND: drift, L=0.20000;
+LM874: monitor, L=0.00000;
+HQ874_1: quadrupole, L=0.97500, K1=HQ874K1;
+HQ874_2: quadrupole, L=0.97500, K1=HQ874K1;
+MQEND: drift, L=0.20000;
+DRX3: drift, L=0.08597;
+D12IN_2: drift, L=0.30480;
+MQEND_875: drift, L=0.20000;
+HQ875: quadrupole, L=0.75500, K1=HQ875K1;
+HQ875: quadrupole, L=0.75500, K1=HQ875K1;
+MQEND2: drift, L=0.19682;
+LM875A: monitor, L=0.00000;
+DW875: drift, L=0.09386;
+MW875: monitor, L=0.00000;
+DW875B: drift, L=0.15575;
+BPM_END: drift, L=0.02540;
+HP875: hmonitor, L=0.07620;
+HP875: hmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+BPM_END: drift, L=0.02540;
+VP875: vmonitor, L=0.07620;
+VP875: vmonitor, L=0.07620;
+BPM_END: drift, L=0.02540;
+DTORA: drift, L=0.14699;
+TOR875: drift, L=0.30480;
+D876A:  drift, L=0.13215;
+MW876: monitor, L=0.00000;
+D876B: drift, L=0.15240;
+DCOLH: drift, L=0.02540;
+DCOLH: drift, L=0.02540;
+DDCOL: drift, L=0.03914;
+LM875B: monitor, L=0.00000;
+FLANGE: marker;
+DH1: drift, L=1.42048;
+VPTG1: vmonitor, L=0.00000;
+DH2: drift, L=0.20367;
+HPTG1: hmonitor, L=0.00000;
+DH3: drift, L=0.20357;
+VPTG2: vmonitor, L=0.00000;
+DH4_1: drift, L=0.20382;
+HPTG2: hmonitor, L=0.00000;
+DH4_2: drift, L=0.62698;
+MWTGT: monitor, L=0.00000;
+D2TGT: drift, L=0.64765;
+DRTGT_1: drift, L=0.35560;
+MTGT: marker;
+DRTGT_2: drift, L=0.35560;
+HRNDN: drift, L=1.09120;
+D2UB: drift, L=466.70145;
+D2MB: drift, L=73.20866;
+
+
+END;
+
+
+bnbline: line=(
+
+HQ851, SQA_END, DEX1, LM8511, MID_END, B8511P, MID_END2, DYFU, GV, DYFD, DR000, TOR860, DR001, MCV_END, VT860, MCV_END2, DR002, IP300, TAPER_DRIFT_1, BEL040_1, BS860U, BS860, BS860D, DR003, BPM_END_1, HP860_1, HP860_2, BPM_END_860_1, BPM_END_860_2, VP860_1, VP860_2, BPM_END_2, DR004, QE0_1, HQ860_1, HQ860_2, QE0_2, DR006, MCH_END_860_1, HT860, MCH_END_860_2, IP300, BEL040_2, DEX2B, HBB1, LM8601, D63_END, B8601, D63_END, DBB1, D63_END, B8602, D63_END, DINA, BPM_END_n, HP861, HP861, BPM_END, BPM_END, VP861, VP861, BPM_END, D861X, MW861, MW861, BEL861D, QE0_3, HQ861, HQ861, QE0_4, DQ23, QE0_5, HQ862, HQ862, QE0_6, LM862, DR862A, HT862, DR862B, VT862, DR862C, IP600, DR862D, DINB, DUMMY, DQQ, DUMMY, DPIPE1, DPIPE2, DUMMY, DQQ, DUMMY, DO1A, PG864, IP600, GV, LM864, BPM_END, HP864_1, HP864_2, BPM_END, BPM_END, VP864, VP864, BPM_END, D864X, MW864, MW864, BEL864D, QE0_7, HQ864_1, HQ864_2, QE0_8, RVE, RV, RVE, QE0_9, HQ865_1, HQ865_2, QE0_10, LM865, MCH_END, HT865, MCH_END, MCV_END, VT865, MCV_END, BEL040_3, DO1B, HBB2, D63_END, B8651, D63_END, DBB2, D63_END, B8652, D63_END, DBB2, D63_END, B8653, D63_END, HBB2, MK_LVL, BSWIC, DO2A, HTSLOT, IP300, BEL040_4, HBB2, D63_END, B8661, D63_END, LM8661, DBB2, D63_END, B8662, D63_END, HSLOT866, BPM_END, HP866, HP866, BPM_END, BEL040_5, DO2X, QE0_11, HQ866_1, HQ866_2, QE0_12, LM866, MCH_END,MCH866, MCH_END, IPINS_1, BEL040_6, HBB2, D63_END, B8663, D63_END, DR867U, BPM_END, VP867, VP867, BPM_END, D867X, BEL040_7, PMQ_END, Q867A, PMQ_END, DQQ867, DQQ867, PMQ_END, Q867B, PMQ_END, LM867, D2IN, MCV_END, MCV867, MCV_END, IP300, BEL040_8, DR867D, D63_END, B8671, D63_END, DBB3_1, D63_END, B8672, D63_END, DBB3_2, D63_END, B8673, D63_END, DR868U, BPM_END, HP868, HP868, BPM_END, D868X, BEL040_9, PMQ_END_t, Q868A, PMQ_END_t1, DQQ868, DQQ868, PMQ_END_t2, Q868B, PMQ_END_t3, LM868, D2IN, MCH_END_t1, MCH868, MCH_END_t2, DR868D, BEL040_10, DR868D2, D63_END_t1, B8681, D63_END_t2, DBB3_3, D63_END_t3, B8682, D63_END_t4, DBB3_4, D63_END_t5, B8683, D63_END_t6, DR869U_1, BPM_END_x1, VP869, VP869, BPM_END_x2, D869X, BEL040_11, PMQ_END_t4, Q869A, PMQ_END_t5, DQQ869_1, DQQ869_2, PMQ_END_t6, Q869B, PMQ_END_t7, LM869, D2IN, MCV_END, MCV869, MCV_END, IP300, BEL040_12, DR869D, D63_END, B8691, D63_END, DBB3_5, D63_END, B8692, D63_END, DBB3_6, D63_END, B8693, D63_END, DR870U, D6IN, BPM_END, HP870, HP870, BPM_END, BPM_END, VP870, VP870, BPM_END, D870X, TAPER_DRIFT_2, PMQ_END, Q870A, PMQ_END, DQQ2_1, DQQ2_2, PMQ_END, Q870B, PMQ_END, LM870, D2IN_870, MCH_END_870, HT870, MCH_END_n, BEL040_13, DR870D, MW870, DRENDARC, DR870, DR871U, BPM_END_871_1, VP871_1, VP871_2, BPM_END_871_2, D871X, SPL871, BEL871D, PMQ_END_871_1, Q871A, PMQ_END_871_2, DQQ2_871_1, DQQ2_871_2, PMQ_END_871_3, Q871B, PMQ_END, LM871, PAD871A, MCV_END, MCV871, MCV_END, PAD871B, DR871D, IP300, BEL040_14, D63_END, B8711, D63_END, DR872U, LM872, BPM_END, HP872, HP872, BPM_END, D872X, MW872, MW872, BEL872U, MQEND_1, HQ872_1, HQ872_2, MQEND_2, D6IN, MCH_END, MCH872, MCH_END, IPINS_2, BEL040_15, DR872D, D63_END, B8721, D63_END, D1M, DRX1, PG873, IP300, BPM_END, HP873, HP873, BPM_END, BPM_END, VP873, VP873, BPM_END, DRX1A, MW873, MW873, DRX1B, ST_END, HT873, HT873, ST_END, PAD_MCV, MCV_END, VT873, VT873, MCV_END, PAD_MCV, BEL040_16, LM873, MQEND, HQ873_1, HQ873_2, MQEND, DRX2, D12IN_1, MQEND, LM874, HQ874_1, HQ874_2, MQEND, DRX3, D12IN_2, MQEND, HQ875, HQ875, MQEND2, LM875A, DW875, MW875, DW875B, BPM_END, HP875, HP875, BPM_END, BPM_END, VP875, VP875, BPM_END, DTORA, TOR875, D876A, MW876, D876B, DCOLH, DCOLH, DDCOL, LM875B, FLANGE, DH1, VPTG1, DH2, HPTG1, DH3, VPTG2, DH4_1, HPTG2, DH4_2, MWTGT, D2TGT, DRTGT_1, MTGT, DRTGT_2, HRNDN, D2UB, D2MB);
+
+
+! Set up beam parameters
+beam, particle=proton, energy=8.83490;
+
+! Use the defined sequence
+use, sequence=bnbline;
+
+
+
+!select,flag=twiss,column=name,s,betx,bety;
+
+select, flag=twiss, column=name, s, betx, bety, dx, dy, alfx, alfy;
+
+! Perform Twiss analysis
+twiss, save, RMATRIX, file="twiss_HQ875K1_default.out"
+  BETX=6.85899709, ALFX=0.34098521,
+  BETY=62.83035029, ALFY=-0.77036778,
+  DX=0.55900957, DPX=0.0,
+  DY=-0.01632878, DPY=0.0;
+
+
+
+! Plot Twiss parameters
+
+! Create the first plot for beta functions
+
+plot, haxis=s, vaxis=betx, bety, dx, dy, colour=100, range = HQ851/HRNDN, file=HQ875K1_default;
+!plot, haxis=s, vaxis=betx, bety, colour=100, range = BPM_END_n/DPIPE1, file=bnbnewtest_beta_Aug20_uptoDPIPE;
+!plot, haxis=s, vaxis=betx, bety, colour=100, range = DPIPE2/HQ866_1, file=bnbnewtest_beta_Aug20_uptoHQ866_1;
+!plot, haxis=s, vaxis=betx, bety, colour=100, range = HQ866_2/MCH_END_n, file=bnbnewtest_beta_Aug20_uptoMCH_END;
+!plot, haxis=s, vaxis=betx, bety, colour=100, range = BEL040_13/DRX3, file=bnbnewtest_beta_Aug20_uptoDRX3;
+!plot, haxis=s, vaxis=betx, bety, colour=100, range = D12IN_1/D2MB, file=bnbnewtest_beta_Aug20_uptoD2MB;
+!plot, haxis=s, vaxis=betx,bety  colour=100, range = HQ866_1/Q871B, file=test;
+
+
+
+! Create the second plot for dispersion functions
+!plot, haxis=s, vaxis=dx, dpx, dy, dpy, colour=100, range = HQ851/HRNDN, file=bnbnewtest_dispersion_Aug21_full;
+!plot, haxis=s, vaxis=dx, dy, colour=100, range = BPM_END_n/DPIPE1, file=bnbnewtest_dispersion_Aug20_uptoDPIPE;
+!plot, haxis=s, vaxis=dx, dy, colour=100, range = DPIPE2/HQ866_1, file=bnbnewtest_dispersion_Aug20_uptoHQ866_1;
+!plot, haxis=s, vaxis=dx, dy, colour=100, range = HQ866_2/MCH_END_n, file=bnbnewtest_dispersion_Aug20_uptoMCH_END;
+!plot, haxis=s, vaxis=dx, dy, colour=100, range = BEL040_13/DRX3, file=bnbnewtest_dispersion_Aug20_uptoDRX3;
+!plot, haxis=s, vaxis=dx, dy, colour=100, range = D12IN_1/D2MB, file=bnbnewtest_dispersion_Aug20_uptoD2MB;
+
+
+
+! Survey analysis
+survey, file="surveybnb_final.txt";
+
+stop;
