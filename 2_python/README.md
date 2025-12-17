@@ -159,6 +159,42 @@ These include:
 - Target beam spot optimization plots  
 
 ---
+### Collimator Jaw Motion (External Raw Data Required)
+
+- `plot_collimator_jaws.py`
+
+This script plots the time evolution of BNB collimator jaw positions during
+beamline operation.
+
+⚠️ **Important:**  
+This script requires **external raw BNB beamline CSV data** that is **not**
+stored in this repository.
+
+The required input is a CSV file produced by the BNB BR study data acquisition,
+for example:
+
+- `bnb_br_study_br_collimation_2025-06-16T175101Z.csv`
+
+#### Usage Example
+
+```bash
+cd 2_python
+
+python plot_collimator_jaws.py \
+  --data-dir /path/to/bnb_br_study_2025-06-16
+The script will:
+
+Read the raw collimator jaw channels (I:C836*, I:C838*)
+
+Convert jaw positions to mm
+
+Plot jaw motion vs time
+
+Save the figure to:
+3_results/figures/collimator_jaws_vs_time.png
+
+
+
 
 # 6. Original Jupyter Notebooks (Archive / Reference)
 

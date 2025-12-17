@@ -205,3 +205,15 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# External raw BNB beam study data (not tracked)
+bnb_br_study_*/
+0_raw_data/
+external_data/*
+!external_data/README.md
+
+
+# Generated figures
+3_results/figures/*.png
+3_results/figures/*.pdf
