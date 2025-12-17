@@ -66,6 +66,22 @@ These scripts operate directly on **measured multiwire CSV beam data**.
   - All wires  
   - All scan files  
 
+
+## Raw Beam Data Location
+
+All scripts that operate on measured BNB beam data require the user to supply
+a directory containing raw CSV files.
+
+The recommended workflow is to create a symbolic link:
+
+    ln -s ~/Downloads/bnb_br_study_2025-06-16 external_data/bnb_br_study_2025-06-16
+
+and then run scripts using:
+
+    --data-dir ../external_data/bnb_br_study_2025-06-16
+
+
+
 ### Output CSV files:3_results/csv/wire_sigmas_*.csv
 
 

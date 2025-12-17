@@ -217,3 +217,8 @@ external_data/*
 # Generated figures
 3_results/figures/*.png
 3_results/figures/*.pdf
+
+
+# macOS metadata
+.DS_Store
+*/.DS_Store
