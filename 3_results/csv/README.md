@@ -98,10 +98,4 @@ Every plot in:
 
 is generated directly from one or more CSV files stored here.
 
----
-
-## Scientific Integrity Note
-
-These CSV files represent the **final numerical truth layer** of the analysis. Any reinterpretation, fitting, or publication-level figure should reference these files directly to ensure reproducibility.
-
 
