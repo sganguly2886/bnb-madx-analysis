@@ -1,268 +1,194 @@
-# Python Analysis Scripts
+BNB MAD-X / Q873 Optics & Emittance Analysis
+===========================================
 
-This folder contains all Python and Jupyter scripts used to process MAD-X Twiss outputs, analyze measured multiwire beam data, extract emittance and momentum spread, predict the target beam spot size, and generate all final figures used in the BNB narrow beam optics study.
+This repository contains Python scripts and supporting utilities for analyzing
+BNB beam optics, wire scanner data, emittance, momentum spread, and target beam
+spot size as a function of Q873 quadrupole current.
 
-This directory represents the full numerical and experimental reconstruction chain.
+The workflow has been fully migrated from exploratory Jupyter notebooks to
+standalone Python scripts to ensure reproducibility, clarity, and
+version-controlled physics results.
 
----
 
-## Analysis Pipeline Overview
+Repository Structure
+--------------------
 
-The full physics workflow implemented by these scripts is:
+bnb-madx-analysis/
+├── 2_python/
+│   ├── plot_Q873_optics_vs_current.py
+│   ├── plot_Q873_sigmas.py
+│   ├── plot_Q873_95_emittance_and_Dp.py
+│   ├── plot_Q873_scaled_dispersion_and_target_sigma.py
+│   ├── plot_wire_profiles.py
+│   ├── plot_collimator_jaws.py
+│   ├── fit_wire_sigmas.py
+│   ├── tfs_utils.py
+│   ├── wire_utils.py
+│   ├── emittance_vs_Q873_current_pi-mm-mrad.csv
+│   ├── emittance_vs_Q873_current_with_errors.csv
+│   ├── README.txt
+│   └── notebooks_archive/ (optional / historical)
+├── 3_results/
+│   ├── figures/
+│   └── csv/
+└── external_data/ (symlink, not versioned)
 
-MAD-X lattices  
-→ Twiss outputs (`1_twiss_outputs/`)  
-→ Optics extraction  
-→ Wire profile fitting  
-→ Emittance & momentum spread fitting  
-→ Target beam spot prediction  
-→ Final physics plots (`3_results/figures/`)
 
-All numerical conclusions and plots in this repository are derived from this pipeline.
+Requirements
+------------
 
----
+Python ≥ 3.9
 
-# 1. Twiss Processing and Optics Extraction
+Required packages:
+- numpy
+- pandas
+- matplotlib
 
-These scripts read MAD-X Twiss output files and extract optical functions at the wire chambers (MW873, MW875, MW876).
+Install with:
+pip install numpy pandas matplotlib
 
-### Scripts:
-- (From earlier pipeline, Twiss inputs already exist in `1_twiss_outputs/`)
 
-### Output CSV files written to:3_results/csv/
+External Data
+-------------
 
+Raw beam data and wire scan inputs are not stored in this repository.
 
-### Example CSV outputs:
-- `betax_vs_Q873_current.csv`
-- `dispersion_vs_Q873_current.csv`
-- Corresponding HQ874 and HQ875 CSV files
+Create a symbolic link to your local data directory:
+ln -s /path/to/bnb_br_study external_data
 
-These CSVs are used by all downstream fitting and plotting scripts.
+All scripts resolve paths relative to this link.
 
----
 
-# 2. Wire Profile Extraction and Gaussian Fitting
+Quick Start (Reproduce All Q873 Results)
+---------------------------------------
 
-These scripts operate directly on **measured multiwire CSV beam data**.
-
-### Core Utility
-- `wire_utils.py`  
-  Shared functions for:
-  - Parsing binary multiwire blobs  
-  - Gaussian fitting  
-  - RMS fallback fitting  
-
-### Wire Profile Plotting
-- `plot_wire_profiles.py`  
-  Generates full horizontal and vertical profiles for:
-  - MW873
-  - MW875
-  - MW876
-
-### Wire Sigma Extraction
-- `fit_wire_sigmas.py`  
-  Fits Gaussian widths (σ) for:
-  - Horizontal and vertical beam sizes  
-  - All wires  
-  - All scan files  
-
-
-## Raw Beam Data Location
-
-All scripts that operate on measured BNB beam data require the user to supply
-a directory containing raw CSV files.
-
-The recommended workflow is to create a symbolic link:
-
-    ln -s ~/Downloads/bnb_br_study_2025-06-16 external_data/bnb_br_study_2025-06-16
-
-and then run scripts using:
-
-    --data-dir ../external_data/bnb_br_study_2025-06-16
-
-
-
-### Output CSV files:3_results/csv/wire_sigmas_*.csv
-
-
-These σ values are direct experimental inputs for emittance fitting.
-
----
-
-# 3. Emittance and Momentum Spread Fitting
-
-These scripts solve the beam size model:
-
-\[
-\sigma^2 = \varepsilon \cdot \beta + (\sigma_\delta \cdot D)^2
-\]
-
-Where:
-- σ = RMS beam size from wire fits  
-- ε = geometric RMS emittance  
-- β = beta function from MAD-X  
-- σδ = RMS fractional momentum spread  
-- D = dispersion  
-
-### Scripts:
-- `analyze_emittance_dispersion_Q873.py`
-- `analyze_emittance_dispersion_Q874.py`
-- `analyze_emittance_dispersion_Q875.py`
-
-### Extracted Parameters:
-- εx, εy  
-- σδ  
-
-### Output CSV files:3_results/csv/
-
-
-Example:
-- `emittance_vs_Q873_current.csv`
-- `momentum_spread_vs_Q873_current.csv`
-- Corresponding HQ874 and HQ875 files
-
----
-
-# 4. Target Beam Spot Size Prediction
-
-These scripts propagate fitted beam parameters to the BNB target (~207 m downstream).
-
-### Target Spot Calculation Scripts:
-- `cal_spotsize_Q873.py`
-- `cal_spotsize_Q874.py`
-- `cal_spotsize_Q875.py`
-
-### These compute:
-- σx(target)
-- σy(target)
-- Effective 2D beam spot area:
-  
-\[
-A = \sigma_x \cdot \sigma_y
-\]
-
-### Output CSV files:
-3_results/csv/target_sigma_prediction_scaled_D_Q873.csv
-3_results/csv/target_sigma_prediction_scaled_D_Q874.csv
-3_results/csv/target_sigma_prediction_scaled_D_Q875.csv
-
-
----
-
-# 5. Plotting and Final Visualization Scripts
-
-These scripts generate all physics plots used in the talk.
-
-### Target Spot Area vs Current
-- `plot_target_area_Q873.py`
-- `plot_target_area_Q874.py`
-- `plot_target_area_Q875.py`
-
-### Collimator Jaw Motion
-- `plot_collimator_jaws.py`
-
-### Wire Profile Visualization
-- `plot_wire_profiles.py`
-
-### All figures are saved to:3_results/figures/
-
-
-These include:
-- Beta-function scan plots  
-- Dispersion scan plots  
-- Emittance and momentum spread plots  
-- Wire chamber beam size plots  
-- Target beam spot optimization plots  
-
----
-### Collimator Jaw Motion (External Raw Data Required)
-
-- `plot_collimator_jaws.py`
-
-This script plots the time evolution of BNB collimator jaw positions during
-beamline operation.
-
-⚠️ **Important:**  
-This script requires **external raw BNB beamline CSV data** that is **not**
-stored in this repository.
-
-The required input is a CSV file produced by the BNB BR study data acquisition,
-for example:
-
-- `bnb_br_study_br_collimation_2025-06-16T175101Z.csv`
-
-#### Usage Example
-
-```bash
 cd 2_python
 
-python plot_collimator_jaws.py \
-  --data-dir /path/to/bnb_br_study_2025-06-16
-The script will:
+1. Optics (β, D) vs Q873 current
+python plot_Q873_optics_vs_current.py
 
-Read the raw collimator jaw channels (I:C836*, I:C838*)
+2. Measured vs predicted wire sigmas
+python plot_Q873_sigmas.py
 
-Convert jaw positions to mm
+3. Emittance & momentum spread extraction
+python plot_Q873_95_emittance_and_Dp.py
 
-Plot jaw motion vs time
+4. Scaled dispersion & target beam spot prediction
+python plot_Q873_scaled_dispersion_and_target_sigma.py
 
-Save the figure to:
-3_results/figures/collimator_jaws_vs_time.png
+Plots are written to:
+3_results/figures/
 
-
-
-
-# 6. Original Jupyter Notebooks (Archive / Reference)
-
-These notebooks contain the **original interactive analysis used during the study** and serve as archival references.
-
-- `Q873_betax_vs_current.ipynb`
-- `Q874_betax_vs_current.ipynb`
-- `Q875_betax_vs_current.ipynb`
-
-All physics logic from these notebooks has now been fully migrated into the standalone `.py` scripts above for full reproducibility.
-
----
-
-# Output Directory Structure
-
-All numerical outputs:3_results/csv/
-
-All plots:3_results/figures/
+Numerical outputs (CSV) are written to:
+3_results/csv/
 
 
----
+Optics vs Q873 Current
+---------------------
 
-#  Software Requirements
+Script:
+plot_Q873_optics_vs_current.py
 
-- Python 3.8+
-- NumPy
-- Pandas
-- Matplotlib
-- SciPy
-
----
-
-#  Important Reproducibility Notes
-
-- These scripts assume MAD-X Twiss files already exist in:1_twiss_outputs/
+Description:
+- Loads MAD-X Twiss files for each Q873 current
+- Extracts βx, βy, Dx, Dy at MW873, MW875, MW876
+- Plots optics functions vs Q873 current
 
 
-- All final scientific conclusions in this repository are derived solely from:
-  - `2_python/`
-  - `3_results/`
+Wire Sigma Comparison
+---------------------
 
-- The Jupyter notebooks are retained for traceability only.
-- The `.py` scripts define the **official reproducible pipeline**.
+Script:
+plot_Q873_sigmas.py
 
----
-
-
-
+Description:
+- Compares measured wire scanner σ to MAD-X predictions
+- Validates optics trends prior to emittance fitting
 
 
+Emittance & Momentum Spread Fitting
+-----------------------------------
+
+Script:
+plot_Q873_95_emittance_and_Dp.py
+
+Beam size model:
+σ² = ε·β + (σδ·D)²
+
+Outputs:
+- RMS geometric emittance εx, εy
+- 95% geometric emittance
+- 95% normalized emittance
+- RMS momentum spread σδ
+- Absolute momentum spread Δp
+
+Output CSV files:
+- emittance_vs_Q873_current_with_errors.csv
+- emittance_vs_Q873_current_pi-mm-mrad.csv
 
 
+Scaled Dispersion & Target Beam Spot Prediction
+-----------------------------------------------
+
+Script:
+plot_Q873_scaled_dispersion_and_target_sigma.py
+
+Description:
+- Inverts measured σ at MW873/875/876 to estimate dispersion
+- Scales MAD-X dispersion using median ratios
+- Propagates fitted emittance and momentum spread to the BNB target (~207 m)
+- Predicts σx(target) and σy(target) vs Q873 current
+
+Output CSV files:
+- Dx_estimates_vs_current.csv
+- Dy_estimates_vs_current.csv
+- target_sigma_prediction_scaled_D.csv
 
 
+Utility Modules
+---------------
 
+tfs_utils.py
+Robust MAD-X TFS file reader and element selection helpers
+
+wire_utils.py
+Shared wire scanner fitting and plotting utilities
+
+
+Jupyter Notebooks (Archive Only)
+--------------------------------
+
+The following notebooks are retained for historical reference only:
+
+- Q873_betax_vs_current.ipynb
+- Q874_betax_vs_current.ipynb
+- Q875_betax_vs_current.ipynb
+
+All physics logic has been migrated into standalone Python scripts.
+The .py files define the authoritative and reproducible analysis.
+
+
+Notes & Conventions
+-------------------
+
+- Emittances use the FNAL convention:
+  95% ≈ 6 × RMS
+
+- Normalized emittance:
+  εn = βγ · ε
+
+- Beam momentum is assumed to be 8.8349 GeV/c unless otherwise stated
+
+
+Maintainer Notes
+----------------
+
+- Do not commit backup files (*.py~) or __pycache__/
+- External data must remain outside version control
+- CSV outputs represent derived physics results and should be committed
+
+
+Contact
+-------
+
+Sudeshna Ganguly @ sganguly@fnal.gov
