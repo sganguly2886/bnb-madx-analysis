@@ -225,3 +225,14 @@ external_data/*
 
 # Generated CSV results
 3_results/csv/*.csv
+
+
+# MAD-X outputs
+1_twiss_outputs/*.tfs
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor backups
+*~
