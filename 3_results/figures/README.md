@@ -1,89 +1,102 @@
-# Figures and Plots
+# Final Figures — Q873 Optics Scan
 
-This folder contains all visual outputs generated from the MAD-X + Python analysis pipeline. These figures represent the final scientific interpretation of the BNB narrow beam optics studies.
+This directory contains the **final, curated figures** produced from the
+MAD-X + Python analysis of the **Q873 quadrupole current scan** in the BNB
+narrow beam optics study.
+
+All figures in this folder correspond to results that are:
+- quantitatively validated,
+- consistent with measured wire data,
+- suitable for internal notes, reviews, and archival reference.
 
 ---
 
-## Categories of Figures
+## Contents
 
-### **1. Beta Function Scan Plots**
-Examples:
-- `betx_HQ874_readable.png`
-- `betx_HQ875_readable.png`
-- `betx_K1_scan_150m_onward.png`
+### **1. Horizontal Beta Function vs Q873 Current**
+**File:** `Q873_BETX_vs_current.png`
 
-**Show:**
-- βx(s) evolution along the beamline
-- Sensitivity to quadrupole current variations
+**Shows:**
+- βx evaluated at MW873, MW875, MW876
+- Dependence on Q873 current setting
 
 **Purpose:**
-- Diagnose focusing behavior
-- Locate optics compression and expansion regions
+- Identify focusing trends
+- Demonstrate that βx alone does *not* fully explain beam size behavior
 
 ---
 
-### **2. Dispersion Scan Plots**
-Examples:
-- `betx_dx_zoom_around_200m.png`
-- `betx_dx_HQ873_874_joint_variation.png`
+### **2. Horizontal Dispersion vs Q873 Current**
+**File:** `Q873_DX_vs_current.png`
 
-**Show:**
-- Joint evolution of βx and Dx
-- Chromatic sensitivity of the optics
+**Shows:**
+- Dx at MW873, MW875, MW876
+- Strong current-dependent dispersion modulation
 
----
-
-### **3. Emittance and Momentum Spread Plots**
-Examples:
-- `Q874_emittance95_geometric.png`
-- `Q874_emittance95_normalized.png`
-
-**Show:**
-- Transverse beam quality versus quadrupole setting
-- Stability and variation of ε and σδ
+**Purpose:**
+- Explain σx variation observed in wire data
+- Establish dispersion as the dominant driver of beam size changes
 
 ---
 
-### **4. Beam Size at Wire Chambers**
-Examples:
-- `MAD-X_predicted___at_wires_vs_Q873_current.csv` (plotted)
-- σx, σy trends at MW873, MW875, MW876
+### **3. Vertical Dispersion vs Q873 Current**
+**File:** `Q873_DY_vs_current.png`
 
-**Show:**
-- Model vs measurement agreement
-- Sensitivity of beam envelopes to optics changes
+**Shows:**
+- Dy at MW873, MW875, MW876
 
----
-
-### **5. Target Beam Spot Prediction**
-Examples:
-- `target_sigma_prediction_scaled_D_Q873.csv` (plotted)
-- Combined σx–σy beam spot area plots
-
-**Show:**
-- Direct optimization metric for BNB performance
-- Identification of globally optimal optics settings
+**Purpose:**
+- Confirm weak vertical chromatic effects
+- Support assumption that σy is largely emittance-dominated
 
 ---
 
-## Scientific Meaning of These Figures
+## How These Figures Are Generated
 
-These plots are used to conclude that:
+All figures are produced by:
 
-- Q873 baseline provides the global σx minimum
-- Q874 shows a local minimum near −27 A only
-- Q875 has limited leverage on σx but affects σy
-- Dispersion dominates σx behavior in several scan regions
-- Target spot optimization must consider σx·σy, not βx alone
+2_python/plot_Q873_optics_vs_current.py
+
+
+which reads MAD-X TFS files from `1_twiss_outputs/` and extracts optics
+functions at the three downstream wire chambers.
+
+No manual editing is performed on the plots.
 
 ---
 
-## Citation and Reuse
+## Relationship to Other Results
+
+These figures are used in conjunction with:
+
+- **Emittance extraction**
+  - `3_results/csv/emittance_vs_Q873_current*.csv`
+- **Momentum spread estimation**
+  - `momentum_spread_vs_Q873_current.csv`
+- **Scaled dispersion & target beam size prediction**
+  - `target_sigma_prediction_scaled_D.csv`
+
+Together, these establish a complete and self-consistent interpretation of
+the Q873 scan.
+
+---
+
+## Scientific Conclusions Supported
+
+From these figures and associated analysis:
+
+- Q873 baseline is near the global σx minimum
+- Dispersion, not βx alone, drives σx variation
+- Vertical optics are comparatively stable
+- Target optimization requires σx–σy consideration, not βx minimization
+
+---
+
+## Reuse and Citation
 
 These figures may be reused for:
-- Internal accelerator notes
-- Run plan optimization reviews
-- Neutrino flux reconstruction studies
+- BNB optics notes
+- Run plan reviews
+- Internal accelerator documentation
 
-Any reuse should cite this repository.
-
+Please cite this repository when reusing the plots.
