@@ -222,3 +222,6 @@ external_data/*
 # macOS metadata
 .DS_Store
 */.DS_Store
+
+# Generated CSV results
+3_results/csv/*.csv
