@@ -210,7 +210,7 @@ __marimo__/
 # External raw BNB beam study data (not tracked)
 bnb_br_study_*/
 0_raw_data/
-external_data/*
+#external_data/*
 !external_data/README.md
 
 
@@ -228,7 +228,7 @@ external_data/*
 
 
 # MAD-X outputs
-1_twiss_outputs/*.tfs
+#1_twiss_outputs/*.tfs
 
 # Python cache
 __pycache__/
