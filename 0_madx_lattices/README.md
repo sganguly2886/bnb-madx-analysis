@@ -61,7 +61,6 @@ Files included in this repository:
 These explore:
 
 - Sensitivity of horizontal dispersion to HQ874 current  
-- Local vs global optics minima  
 - Dispersion-driven beam size growth  
 - Coupled behavior with HQ873 through emittance extraction  
 
