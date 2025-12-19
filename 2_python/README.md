@@ -82,6 +82,21 @@ Description:
 - Compares measured wire scanner σ to MAD-X predictions
 - Validates optics trends prior to emittance fitting
 
+### Measured Beam Spot Size Plots
+
+Script:
+plot_measured_sigmas_vs_quads.py
+
+Description:
+- Plots measured wire-scanner beam sizes (σx, σy)
+- Covers scans of Q873, Q874, Q875, and combined Q873+Q874 settings
+- Data shown are measurement-derived, not MAD-X predictions
+- Used to validate optics trends and locate empirical minima
+
+Outputs:
+- Four figures showing σ vs quadrupole settings
+- MW873, MW875, MW876 in both planes
+
 
 Emittance & Momentum Spread Fitting
 -----------------------------------
