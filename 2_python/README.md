@@ -5,7 +5,7 @@ This repository contains Python scripts and supporting utilities for analyzing
 BNB beam optics, wire scanner data, emittance, momentum spread, and target beam
 spot size as a function of Q873 quadrupole current.
 
-The workflow has been fully migrated from exploratory Jupyter notebooks to
+The Q873 workflow has been migrated from exploratory Jupyter notebooks to
 standalone Python scripts to ensure reproducibility, clarity, and
 version-controlled physics results.
 
@@ -26,12 +26,12 @@ bnb-madx-analysis/
 │   ├── wire_utils.py
 │   ├── emittance_vs_Q873_current_pi-mm-mrad.csv
 │   ├── emittance_vs_Q873_current_with_errors.csv
-│   ├── README.txt
-│   └── notebooks_archive/ (optional / historical)
+│   └── (optional) notebooks / historical reference
 ├── 3_results/
 │   ├── figures/
 │   └── csv/
-└── external_data/ (symlink, not versioned)
+└── external_data/
+    └── (local symlink target or placeholder; raw inputs are typically not versioned)
 
 
 Requirements
@@ -51,12 +51,12 @@ pip install numpy pandas matplotlib
 External Data
 -------------
 
-Raw beam data and wire scan inputs are not stored in this repository.
+Raw beam data and wire scan inputs are typically not stored in this repository.
 
-Create a symbolic link to your local data directory:
+If you have local raw inputs, create a symbolic link:
 ln -s /path/to/bnb_br_study external_data
 
-All scripts resolve paths relative to this link.
+Scripts resolve paths relative to this directory.
 
 
 Quick Start (Reproduce All Q873 Results)
@@ -76,10 +76,11 @@ python plot_Q873_95_emittance_and_Dp.py
 4. Scaled dispersion & target beam spot prediction
 python plot_Q873_scaled_dispersion_and_target_sigma.py
 
-Plots are written to:
+Scripts will display plots interactively and/or write outputs.
+When saved, figures go to:
 3_results/figures/
 
-Numerical outputs (CSV) are written to:
+and tables/CSVs go to:
 3_results/csv/
 
 
@@ -164,8 +165,7 @@ The following notebooks are retained for historical reference only:
 - Q874_betax_vs_current.ipynb
 - Q875_betax_vs_current.ipynb
 
-All physics logic has been migrated into standalone Python scripts.
-The .py files define the authoritative and reproducible analysis.
+All authoritative physics logic for Q873 is in the standalone Python scripts.
 
 
 Notes & Conventions
@@ -184,7 +184,7 @@ Maintainer Notes
 ----------------
 
 - Do not commit backup files (*.py~) or __pycache__/
-- External data must remain outside version control
+- External raw inputs should remain outside version control (use symlinks)
 - CSV outputs represent derived physics results and should be committed
 
 
