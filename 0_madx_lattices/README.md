@@ -22,20 +22,8 @@ ultimately depend on these optics definitions.
 
 These represent the nominal operating configurations used in all studies:
 
-- bnbnew.madx  
-  Master baseline lattice used as the template for all scans.
-
-- bnbnew_fixed.madx  
-  Fixed reference optics used for comparison and validation.
-
-- bnbnew_HQ873_default.madx  
-  Default HQ873 horizontal focusing configuration.
-
-- bnbnew_HQ873_874_default.madx  
-  Default coupled HQ873–HQ874 optics configuration.
-
-- bnbnew_HQ875K1_default.madx  
-  Default HQ875 vertical focusing configuration using fixed K1.
+- bnbnew_HQ873_default.madx, bnbnew_HQ873_874_default.madx, bnbnew_HQ875K1_default.madx 
+  Default HQ873 horizontal focusing configuration. This is the reference optics. 
 
 ---
 
@@ -79,36 +67,11 @@ These explore:
 
 ---
 
-### HQ875 Vertical Focusing
-
-Only fixed K1-based HQ875 optics are used in this analysis:
-
-- bnbnew_HQ875K1_default.madx  
-
-These probe:
-
-- Vertical focusing behavior  
-- Stability of sigma_y at the target  
-- Fixed-BETX optimization behavior  
-
----
-
-## Note on Percentage Variation Files
-
-Large global percentage-scaling lattice sets (for example 10%, 20%, 30% global scaling)
-are not included in this repository. These were part of early robustness studies
-and are not required to reproduce the final published plots.
-
-Only the minimal, script-compatible lattice set needed for full reproducibility
-is stored here.
-
----
-
 ## How These Files Are Used
 
 These lattice files are executed using:
 
-madx < filename.madx
+./madx < filename.madx
 
 They generate Twiss output files (.tfs, .out) that are then analyzed using the
 Python scripts in:
