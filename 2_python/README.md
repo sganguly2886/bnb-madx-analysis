@@ -27,12 +27,72 @@ pip install numpy pandas matplotlib
 External Data
 -------------
 
-Raw beam data and wire scan inputs are typically not stored in this repository.
+Raw beam data and wire scan inputs are not stored in this repository.
 
-If you have local raw inputs, create a symbolic link:
-ln -s /path/to/bnb_br_study external_data
+If you have local raw inputs, create a symbolic link at the repository root:
 
-Scripts resolve paths relative to this directory.
+    ln -s /path/to/bnb_br_study_YYYY-MM-DD external_data/bnb_br_study_YYYY-MM-DD
+
+For example:
+
+    ln -s /Users/sganguly/Downloads/bnb_br_study_2025-06-16 \
+          external_data/bnb_br_study_2025-06-16
+
+All scripts resolve paths relative to `external_data/`.
+No raw beam data should be committed to the repository.
+
+Wire Profile Plots (Raw Wire Scans)
+----------------------------------
+
+Script:
+plot_wire_profiles.py
+
+Purpose:
+- Plots full wire-scanner profiles (signal vs position)
+- Used to visually validate Gaussian fits and scan quality
+- Operates directly on raw wire-scan CSV files
+
+Expected Input Layout:
+The script expects a directory containing one CSV per wire and plane, e.g.:
+
+    MW873_H.csv
+    MW873_V.csv
+    MW875_H.csv
+    MW875_V.csv
+    MW876_H.csv
+    MW876_V.csv
+
+Because raw beam study files are timestamped and not named this way,
+**symbolic links must be created** to map raw files into this format.
+
+Recommended setup:
+
+    mkdir -p external_data/bnb_br_study_YYYY-MM-DD/wire_scans
+
+Example (single wire, single plane):
+
+    ln -s \
+      /path/to/bnb_br_study_YYYY-MM-DD/bnb_br_study_Q873-12A_YYYY-MM-DDTHHMMSSZ.csv \
+      external_data/bnb_br_study_YYYY-MM-DD/wire_scans/MW873_H.csv
+
+Running the script:
+
+    cd 2_python
+
+    python plot_wire_profiles.py \
+      --data-dir ../external_data/bnb_br_study_YYYY-MM-DD/wire_scans \
+      --csv-files MW873_H.csv MW873_V.csv \
+      --out-dir ../3_results/figures
+
+Outputs:
+- One PNG per wire/plane showing the full scan profile
+- Files are written to `3_results/figures/`
+
+Notes:
+- This script does not perform emittance fitting
+- It is intended for scan QA and validation
+- Higher-level σ extraction is handled by `fit_wire_sigmas.py`
+
 
 
 Quick Start (Reproduce All Q873 Results)
@@ -162,8 +222,8 @@ All authoritative physics logic for Q873 is in the standalone Python scripts.
 Notes & Conventions
 -------------------
 
-- Emittances use the FNAL convention:
-  95% ≈ 6 × RMS
+- Emittances:
+  95% geometric emittance ≈ 6 × RMS geometric emittance
 
 - Normalized emittance:
   εn = βγ · ε
