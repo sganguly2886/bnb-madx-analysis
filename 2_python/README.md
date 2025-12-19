@@ -10,30 +10,6 @@ standalone Python scripts to ensure reproducibility, clarity, and
 version-controlled physics results.
 
 
-Repository Structure
---------------------
-
-bnb-madx-analysis/
-├── 2_python/
-│   ├── plot_Q873_optics_vs_current.py
-│   ├── plot_Q873_sigmas.py
-│   ├── plot_Q873_95_emittance_and_Dp.py
-│   ├── plot_Q873_scaled_dispersion_and_target_sigma.py
-│   ├── plot_wire_profiles.py
-│   ├── plot_collimator_jaws.py
-│   ├── fit_wire_sigmas.py
-│   ├── tfs_utils.py
-│   ├── wire_utils.py
-│   ├── emittance_vs_Q873_current_pi-mm-mrad.csv
-│   ├── emittance_vs_Q873_current_with_errors.csv
-│   └── (optional) notebooks / historical reference
-├── 3_results/
-│   ├── figures/
-│   └── csv/
-└── external_data/
-    └── (local symlink target or placeholder; raw inputs are typically not versioned)
-
-
 Requirements
 ------------
 
